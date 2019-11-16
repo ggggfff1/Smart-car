@@ -1,0 +1,96 @@
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\bin\Release\上位机.exe.config
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\bin\Release\上位机.exe
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\bin\Release\上位机.pdb
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\obj\Release\上位机.Form1.resources
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\obj\Release\上位机.Properties.Resources.resources
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\obj\Release\上位机.csproj.GenerateResource.Cache
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\obj\Release\上位机.exe
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\obj\Release\上位机.pdb
+C:\Users\12834\Desktop\上位机\上位机\bin\Release\上位机.exe.config
+C:\Users\12834\Desktop\上位机\上位机\bin\Release\上位机.exe
+C:\Users\12834\Desktop\上位机\上位机\bin\Release\上位机.pdb
+C:\Users\12834\Desktop\上位机\上位机\obj\Release\上位机.Form1.resources
+C:\Users\12834\Desktop\上位机\上位机\obj\Release\上位机.Properties.Resources.resources
+C:\Users\12834\Desktop\上位机\上位机\obj\Release\上位机.csproj.GenerateResource.Cache
+C:\Users\12834\Desktop\上位机\上位机\obj\Release\上位机.exe
+C:\Users\12834\Desktop\上位机\上位机\obj\Release\上位机.pdb
+C:\Users\12834\Desktop\上位机\上位机\obj\Release\上位机.csprojResolveAssemblyReference.cache
+E:\scut\光电组&双车组\18年\最简单上位机\上位机\bin\Release\上位机.exe.config
+E:\scut\光电组&双车组\18年\最简单上位机\上位机\bin\Release\上位机.exe
+E:\scut\光电组&双车组\18年\最简单上位机\上位机\bin\Release\上位机.pdb
+E:\scut\光电组&双车组\18年\最简单上位机\上位机\obj\Release\上位机.csprojResolveAssemblyReference.cache
+E:\scut\光电组&双车组\18年\最简单上位机\上位机\obj\Release\上位机.Form1.resources
+E:\scut\光电组&双车组\18年\最简单上位机\上位机\obj\Release\上位机.Properties.Resources.resources
+E:\scut\光电组&双车组\18年\最简单上位机\上位机\obj\Release\上位机.csproj.GenerateResource.Cache
+E:\scut\光电组&双车组\18年\最简单上位机\上位机\obj\Release\上位机.csproj.CoreCompileInputs.cache
+E:\scut\光电组&双车组\18年\最简单上位机\上位机\obj\Release\上位机.exe
+E:\scut\光电组&双车组\18年\最简单上位机\上位机\obj\Release\上位机.pdb
+E:\scut\光电组&双车组\18年\18年上位机\上位机\bin\Release\上位机.exe.config
+E:\scut\光电组&双车组\18年\18年上位机\上位机\bin\Release\上位机.exe
+E:\scut\光电组&双车组\18年\18年上位机\上位机\bin\Release\上位机.pdb
+E:\scut\光电组&双车组\18年\18年上位机\上位机\obj\Release\上位机.Form1.resources
+E:\scut\光电组&双车组\18年\18年上位机\上位机\obj\Release\上位机.Properties.Resources.resources
+E:\scut\光电组&双车组\18年\18年上位机\上位机\obj\Release\上位机.csproj.GenerateResource.Cache
+E:\scut\光电组&双车组\18年\18年上位机\上位机\obj\Release\上位机.csproj.CoreCompileInputs.cache
+E:\scut\光电组&双车组\18年\18年上位机\上位机\obj\Release\上位机.exe
+E:\scut\光电组&双车组\18年\18年上位机\上位机\obj\Release\上位机.pdb
+E:\scut\光电组&双车组\18年\18年上位机\上位机\obj\Release\上位机.csprojAssemblyReference.cache
+E:\scut\光电组&双车组\招新\18年上位机\上位机\bin\Release\上位机.exe.config
+E:\scut\光电组&双车组\招新\18年上位机\上位机\bin\Release\上位机.exe
+E:\scut\光电组&双车组\招新\18年上位机\上位机\bin\Release\上位机.pdb
+E:\scut\光电组&双车组\招新\18年上位机\上位机\obj\Release\上位机.csprojAssemblyReference.cache
+E:\scut\光电组&双车组\招新\18年上位机\上位机\obj\Release\上位机.Form1.resources
+E:\scut\光电组&双车组\招新\18年上位机\上位机\obj\Release\上位机.Properties.Resources.resources
+E:\scut\光电组&双车组\招新\18年上位机\上位机\obj\Release\上位机.csproj.GenerateResource.cache
+E:\scut\光电组&双车组\招新\18年上位机\上位机\obj\Release\上位机.csproj.CoreCompileInputs.cache
+E:\scut\光电组&双车组\招新\18年上位机\上位机\obj\Release\上位机.exe
+E:\scut\光电组&双车组\招新\18年上位机\上位机\obj\Release\上位机.pdb
+E:\scut\光电组&双车组\招新\上位机资料\上位机\bin\Release\上位机.exe.config
+E:\scut\光电组&双车组\招新\上位机资料\上位机\bin\Release\上位机.exe
+E:\scut\光电组&双车组\招新\上位机资料\上位机\bin\Release\上位机.pdb
+E:\scut\光电组&双车组\招新\上位机资料\上位机\obj\Release\上位机.csprojAssemblyReference.cache
+E:\scut\光电组&双车组\招新\上位机资料\上位机\obj\Release\上位机.Form1.resources
+E:\scut\光电组&双车组\招新\上位机资料\上位机\obj\Release\上位机.Properties.Resources.resources
+E:\scut\光电组&双车组\招新\上位机资料\上位机\obj\Release\上位机.csproj.GenerateResource.cache
+E:\scut\光电组&双车组\招新\上位机资料\上位机\obj\Release\上位机.csproj.CoreCompileInputs.cache
+E:\scut\光电组&双车组\招新\上位机资料\上位机\obj\Release\上位机.exe
+E:\scut\光电组&双车组\招新\上位机资料\上位机\obj\Release\上位机.pdb
+E:\scut\光电组&双车组\招新\新建文件夹\上位机资料\上位机\bin\Release\上位机.exe.config
+E:\scut\光电组&双车组\招新\新建文件夹\上位机资料\上位机\bin\Release\上位机.exe
+E:\scut\光电组&双车组\招新\新建文件夹\上位机资料\上位机\bin\Release\上位机.pdb
+E:\scut\光电组&双车组\招新\新建文件夹\上位机资料\上位机\obj\Release\上位机.csprojAssemblyReference.cache
+E:\scut\光电组&双车组\招新\新建文件夹\上位机资料\上位机\obj\Release\上位机.Form1.resources
+E:\scut\光电组&双车组\招新\新建文件夹\上位机资料\上位机\obj\Release\上位机.Properties.Resources.resources
+E:\scut\光电组&双车组\招新\新建文件夹\上位机资料\上位机\obj\Release\上位机.csproj.GenerateResource.cache
+E:\scut\光电组&双车组\招新\新建文件夹\上位机资料\上位机\obj\Release\上位机.exe
+E:\scut\光电组&双车组\招新\新建文件夹\上位机资料\上位机\obj\Release\上位机.pdb
+F:\智能车队\上位机例程\上位机资料\上位机\bin\Release\上位机.exe.config
+F:\智能车队\上位机例程\上位机资料\上位机\bin\Release\上位机.exe
+F:\智能车队\上位机例程\上位机资料\上位机\bin\Release\上位机.pdb
+F:\智能车队\上位机例程\上位机资料\上位机\obj\Release\上位机.csprojAssemblyReference.cache
+F:\智能车队\上位机例程\上位机资料\上位机\obj\Release\上位机.Form1.resources
+F:\智能车队\上位机例程\上位机资料\上位机\obj\Release\上位机.Properties.Resources.resources
+F:\智能车队\上位机例程\上位机资料\上位机\obj\Release\上位机.csproj.GenerateResource.cache
+F:\智能车队\上位机例程\上位机资料\上位机\obj\Release\上位机.csproj.CoreCompileInputs.cache
+F:\智能车队\上位机例程\上位机资料\上位机\obj\Release\上位机.exe
+F:\智能车队\上位机例程\上位机资料\上位机\obj\Release\上位机.pdb
+E:\上位机资料\上位机\obj\Release\上位机.exe
+E:\上位机资料\上位机\obj\Release\上位机.pdb
+E:\上位机资料\上位机\obj\Release\上位机.csprojAssemblyReference.cache
+E:\上位机资料\上位机\obj\Release\上位机.Form1.resources
+E:\上位机资料\上位机\obj\Release\上位机.Properties.Resources.resources
+E:\上位机资料\上位机\obj\Release\上位机.csproj.GenerateResource.cache
+E:\上位机资料\上位机\obj\Release\上位机.csproj.CoreCompileInputs.cache
+E:\上位机资料\上位机\bin\Release\上位机.exe.config
+E:\上位机资料\上位机\bin\Release\上位机.exe
+E:\上位机资料\上位机\bin\Release\上位机.pdb
+E:\jjq\上位机\obj\Release\上位机.csprojAssemblyReference.cache
+E:\jjq\上位机\obj\Release\上位机.Form1.resources
+E:\jjq\上位机\obj\Release\上位机.Properties.Resources.resources
+E:\jjq\上位机\obj\Release\上位机.csproj.GenerateResource.cache
+E:\jjq\上位机\obj\Release\上位机.csproj.CoreCompileInputs.cache
+E:\jjq\上位机\obj\Release\上位机.exe
+E:\jjq\上位机\obj\Release\上位机.pdb
+E:\jjq\上位机\bin\Release\上位机.exe.config
+E:\jjq\上位机\bin\Release\上位机.exe
+E:\jjq\上位机\bin\Release\上位机.pdb

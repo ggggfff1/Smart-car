@@ -1,0 +1,56 @@
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\bin\Debug\上位机.exe.config
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\bin\Debug\上位机.exe
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\bin\Debug\上位机.pdb
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\obj\Debug\上位机.csprojResolveAssemblyReference.cache
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\obj\Debug\上位机.Form1.resources
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\obj\Debug\上位机.Properties.Resources.resources
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\obj\Debug\上位机.csproj.GenerateResource.Cache
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\obj\Debug\上位机.exe
+c:\users\12834\documents\visual studio 2017\Projects\上位机\上位机\obj\Debug\上位机.pdb
+C:\Users\12834\Desktop\上位机\上位机\bin\Debug\上位机.exe.config
+C:\Users\12834\Desktop\上位机\上位机\bin\Debug\上位机.exe
+C:\Users\12834\Desktop\上位机\上位机\bin\Debug\上位机.pdb
+C:\Users\12834\Desktop\上位机\上位机\obj\Debug\上位机.csprojResolveAssemblyReference.cache
+C:\Users\12834\Desktop\上位机\上位机\obj\Debug\上位机.Form1.resources
+C:\Users\12834\Desktop\上位机\上位机\obj\Debug\上位机.Properties.Resources.resources
+C:\Users\12834\Desktop\上位机\上位机\obj\Debug\上位机.csproj.GenerateResource.Cache
+C:\Users\12834\Desktop\上位机\上位机\obj\Debug\上位机.exe
+C:\Users\12834\Desktop\上位机\上位机\obj\Debug\上位机.pdb
+F:\智能车领队\资料整理收集\C#上位机\最简单上位机\上位机\bin\Debug\上位机.exe.config
+F:\智能车领队\资料整理收集\C#上位机\最简单上位机\上位机\obj\Debug\上位机.exe
+F:\智能车领队\资料整理收集\C#上位机\最简单上位机\上位机\obj\Debug\上位机.pdb
+F:\智能车领队\资料整理收集\C#上位机\最简单上位机\上位机\bin\Debug\上位机.exe
+F:\智能车领队\资料整理收集\C#上位机\最简单上位机\上位机\bin\Debug\上位机.pdb
+F:\智能车领队\资料整理收集\C#上位机\最简单上位机\上位机\obj\Debug\上位机.csprojResolveAssemblyReference.cache
+F:\智能车领队\资料整理收集\C#上位机\最简单上位机\上位机\obj\Debug\上位机.Form1.resources
+F:\智能车领队\资料整理收集\C#上位机\最简单上位机\上位机\obj\Debug\上位机.Properties.Resources.resources
+F:\智能车领队\资料整理收集\C#上位机\最简单上位机\上位机\obj\Debug\上位机.csproj.GenerateResource.Cache
+E:\scut\光电组&双车组\C#上位机\最简单上位机\上位机\bin\Debug\上位机.exe.config
+E:\scut\光电组&双车组\C#上位机\最简单上位机\上位机\obj\Debug\上位机.exe
+E:\scut\光电组&双车组\C#上位机\最简单上位机\上位机\obj\Debug\上位机.pdb
+E:\scut\光电组&双车组\C#上位机\最简单上位机\上位机\bin\Debug\上位机.exe
+E:\scut\光电组&双车组\C#上位机\最简单上位机\上位机\bin\Debug\上位机.pdb
+E:\scut\光电组&双车组\C#上位机\最简单上位机\上位机\obj\Debug\上位机.csprojResolveAssemblyReference.cache
+E:\scut\光电组&双车组\C#上位机\最简单上位机\上位机\obj\Debug\上位机.Form1.resources
+E:\scut\光电组&双车组\C#上位机\最简单上位机\上位机\obj\Debug\上位机.Properties.Resources.resources
+E:\scut\光电组&双车组\C#上位机\最简单上位机\上位机\obj\Debug\上位机.csproj.GenerateResource.Cache
+E:\jjq\上位机\bin\Debug\上位机.exe.config
+E:\jjq\上位机\bin\Debug\上位机.exe
+E:\jjq\上位机\bin\Debug\上位机.pdb
+E:\jjq\上位机\obj\Debug\上位机.Form1.resources
+E:\jjq\上位机\obj\Debug\上位机.Properties.Resources.resources
+E:\jjq\上位机\obj\Debug\上位机.csproj.GenerateResource.cache
+E:\jjq\上位机\obj\Debug\上位机.csproj.CoreCompileInputs.cache
+E:\jjq\上位机\obj\Debug\上位机.exe
+E:\jjq\上位机\obj\Debug\上位机.pdb
+E:\jjq\上位机\obj\Debug\上位机.csprojAssemblyReference.cache
+C:\Users\ggggfff1\Desktop\jjq2.5\上位机\bin\Debug\上位机.exe.config
+C:\Users\ggggfff1\Desktop\jjq2.5\上位机\bin\Debug\上位机.exe
+C:\Users\ggggfff1\Desktop\jjq2.5\上位机\bin\Debug\上位机.pdb
+C:\Users\ggggfff1\Desktop\jjq2.5\上位机\obj\Debug\上位机.csprojAssemblyReference.cache
+C:\Users\ggggfff1\Desktop\jjq2.5\上位机\obj\Debug\上位机.Form1.resources
+C:\Users\ggggfff1\Desktop\jjq2.5\上位机\obj\Debug\上位机.Properties.Resources.resources
+C:\Users\ggggfff1\Desktop\jjq2.5\上位机\obj\Debug\上位机.csproj.GenerateResource.cache
+C:\Users\ggggfff1\Desktop\jjq2.5\上位机\obj\Debug\上位机.csproj.CoreCompileInputs.cache
+C:\Users\ggggfff1\Desktop\jjq2.5\上位机\obj\Debug\上位机.exe
+C:\Users\ggggfff1\Desktop\jjq2.5\上位机\obj\Debug\上位机.pdb
