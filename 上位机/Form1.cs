@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace 上位机
 {
-    
+
     public partial class Form1 : Form
     {
         public Form1()//构造函数
@@ -111,7 +111,7 @@ namespace 上位机
 
 
 
- 
+
         const int height = 50, width = 120, imgSize = width * height / 8;//图像宽高
         byte[][] img = new byte[height][];//读取图像缓冲区
         byte[] img2 = new byte[width * height];//拷贝到bitmap的图像缓冲区
@@ -141,9 +141,9 @@ namespace 上位机
                             for (int k = 0; k < 8; k++)
                             {
                                 if ((buffer[num] & mask[k]) == 0)
-                                    img[i][j++] = 1;  
+                                    img[i][j++] = 1;
                                 else
-                                    img[i][j++] = 0;   
+                                    img[i][j++] = 0;
                             }
                             num++;
                         }
@@ -157,7 +157,7 @@ namespace 上位机
 
 
                     #region 图像显示
-                    
+
                     num = 0;
                     for (int i = 0; i < height; i++)//二维转一维
                         for (int j = 0; j < width; j++)
@@ -178,7 +178,7 @@ namespace 上位机
                         pictureBox1.Image = (Bitmap)bm.Clone();//显示图片
                         myone.Text = (leftupY).ToString();
                         mytwo.Text = (leftdownY).ToString();
-                        mythree.Text = (oo).ToString();
+                        mythree.Text = (roundstate).ToString();
                         myfour.Text = (fuck).ToString();
                     }));
                     #endregion
@@ -263,6 +263,8 @@ namespace 上位机
         int xmiddle = (0 + imgwidth) / 2;//图像的中点
         int leftdirection = 1;//决定方向，向左的方向
         int rightdirection = 0;//决定方向，向右的方向
+        int updirection = 1;
+        int downdirection = 0;
         int leftupY = 0;
         int leftdownY = 0;
         int rightupY = 0;
@@ -270,7 +272,16 @@ namespace 上位机
         int leftcompare = 0;
         int rightcompare = 0;
         int trustline = 0;
+        int roundstate; // 入圆状态
+        int rounddir;
+
         bool yy;
+        bool circle;
+        bool oneoff = false;
+        bool kkoff = false;
+        bool twooff = false;
+        bool threeoff;
+
         double oo;
         double oo2;
         string fuck;
@@ -299,7 +310,7 @@ namespace 上位机
         *思路：
         *********************************************************************************************************************/
         #region 最小二乘法
-        float leastSquareLinearFit(int downy, int upy,int[] array)
+        float leastSquareLinearFit(int downy, int upy, int[] array)
         {
             float k;
             int i, count;
@@ -501,8 +512,8 @@ namespace 上位机
             int adjustedright = 0;//调整后右边界点
             int left_distance = 0;//左边调整的距离
             int right_distance = 0;//右边调整的距离
-            adjustedright = findchange(startx, rightdirection, row, Black, (imgwidth - 1), 1, 2);//找右边可调整点，findchange是逐行搜跳变函数值
-            adjustedleft = findchange(startx, leftdirection, row, Black, 0, 2, 1);//找左边可调整点
+            adjustedright = findchange(startx, rightdirection, row, White, (imgwidth - 1), 2, 1);//找右边可调整点，findchange是逐行搜跳变函数值
+            adjustedleft = findchange(startx, leftdirection, row, White, 0, 1, 2);//找左边可调整点
             if (adjustedright == (imgwidth - 1) && adjustedleft == 0)//没有找到可以调整的点，返回原值
             {
                 return startx;
@@ -511,11 +522,11 @@ namespace 上位机
             right_distance = adjustedright - startx;
             if (left_distance <= right_distance)//取调整小的作为调整后的中点，返回
             {
-                return adjustedleft;
+                return adjustedleft - 1;
             }
             else
             {
-                return adjustedright;
+                return adjustedright + 1;
             }
         }
         #endregion
@@ -745,10 +756,10 @@ namespace 上位机
         #region 右边补线函数
         void rightcalculate(int upy, int downy)
         {
-            double kk=0.0;
+            double kk = 0.0;
             int i;
-           kk = (downy - upy) / 1.0/(boundary_right[downy] - boundary_right[upy]);
-            
+            kk = (downy - upy) / 1.0 / (boundary_right[downy] - boundary_right[upy]);
+
             for (i = upy - 1; i > downy; i--)
             {
                 boundary_right[i] = (int)(((i - upy) / kk) + boundary_right[upy]);
@@ -771,8 +782,8 @@ namespace 上位机
         {
             double kk = 0.0;
             int i;
-            kk = (downy - upy) /1.0/ (boundary_left[downy] - boundary_left[upy]);
-            
+            kk = (downy - upy) / 1.0 / (boundary_left[downy] - boundary_left[upy]);
+
             for (i = upy - 1; i > downy; i--)
             {
                 boundary_left[i] = (int)(((i - upy) / kk) + boundary_left[upy]);
@@ -785,15 +796,7 @@ namespace 上位机
         #endregion
 
 
-        /*********************************************************************************************************************
-                                                               补线函数
-        *输入：  
-        *返回；
-        *思路：从下方特征点所在行开始，for循环计算到上方特征点所在行，找出竖坐标满足线段表达式的点，并赋上颜色
-        *********************************************************************************************************************/
-        #region 补线
-
-        #endregion
+    
 
         /*********************************************************************************************************************
                                                               搜索边界！！
@@ -815,51 +818,68 @@ namespace 上位机
             middle_line[upy] = firstx;
             trustline = 0;
             for (int i = upy; i >= downy + 1; i--)
-            {               
+            {
                 bleft[i] = findchange(middle_line[i], leftdirection, i, Black, 0, 1, 0);//逐行搜边线
                 bright[i] = findchange(middle_line[i], rightdirection, i, Black, imgwidth - 1, 0, 1);
-                
+
                 if (bleft[i] == 0) leftcompare = 1;
                 if (bright[i] == 119) rightcompare = 1;
 
-                middle_line[i - 1] = abs((bleft[i] + bright[i]) / 2);//确定该行的中点，作为i-1行的起始点     
-                if (i != upy)
-                {          
-                    if (img[i - 1][middle_line[i]] == Black)//i-1行的起始点为黑色时，把起始点设为图像中点
-                    {
-                        if (img[i - 1][xmiddle] == Black)//图像中点也为黑色，且开启了中点调整后，执行调整中点的函数
-                        {
-                            middle_line[i - 1] = middleadjust(xmiddle, i - 1);
-                        }
-                        else
-                        {
-                            middle_line[i - 1] = xmiddle;
-                        }
-                    }
-                    //else//起始点不为黑色时，直接将i行的中点作为i-1行的起始点
-                    //{
-                    //    middle_line[i - 1] = middle_line[i];
-                    //}
+                if(circle == true && rounddir == rightdirection && kkoff ==true)
+                {
+                    middle_line[i - 1] =bright[i] -  (int)((bright[i] - bleft[i]) * 0.25) - 2;
                 }
-              //  if (abs(middle_line[i - 1]) > 7 + middle_line[i]) middle_line[i - 1] = middle_line[i];  //这里可以调整参数              
+                else if (circle == true && rounddir == rightdirection && kkoff == true)
+                {
+                    middle_line[i - 1] = bleft[i] + (int)((bright[i] - bleft[i]) * 0.25) + 2;
+                }
+                else if(circle == true && rounddir == rightdirection && roundstate == 3)
+                {
+                    middle_line[i - 1] = bleft[i] + (int)((bright[i] - bleft[i] ) *  0.25);
+               //     oo = 100;
+                }
+                else
+                {
+                    middle_line[i - 1] = abs((bleft[i] + bright[i]) / 2);//确定该行的中点，作为i-1行的起始点     
+                    if (i != upy)
+                    {
+                        if (img[i - 1][middle_line[i]] == Black)//i-1行的起始点为黑色时，把起始点设为图像中点
+                        {
+                            if (img[i - 1][xmiddle] == Black)//图像中点也为黑色，且开启了中点调整后，执行调整中点的函数
+                            {
+                                middle_line[i - 1] = middleadjust(xmiddle, i - 1);
+                            }
+                            else
+                            {
+                                middle_line[i - 1] = xmiddle;
+                            }
+                        }
+                        //else//起始点不为黑色时，直接将i行的中点作为i-1行的起始点
+                        //{
+                        //    middle_line[i - 1] = middle_line[i];
+                        //}
+                    }
+                }
+
+                //  if (abs(middle_line[i - 1]) > 7 + middle_line[i]) middle_line[i - 1] = middle_line[i];  //这里可以调整参数              
             }
             for (int i = 15; i > 0; i--)//搜索可信线
             {
                 if (bleft[i] > bright[i - 1] || bright[i] < bleft[i - 1])
                 {
-                    trustline = i + 2;
+                    trustline = i+1;
                     break;
                 }
                 if (boundary_left[i] == boundary_right[i])
                 {
-                    trustline = i + 2;
+                    trustline = i +1;
                     break;
                 }
             }
 
-            
-            
-           
+
+
+
 
 
 
@@ -877,7 +897,7 @@ namespace 上位机
             bool compare;
             rightdownY = 0;
             rightupY = 0;
-            if(boundary_right[imgheight - 2] == (imgwidth - 1))
+            if (boundary_right[imgheight - 2] == (imgwidth - 1))
             {
                 yy = true;
                 compare = false;
@@ -889,7 +909,7 @@ namespace 上位机
             }
             deadline = deadline >= 3 ? deadline : 3;
 
-            for (int i = imgheight - 1; i > deadline + 2; i--)
+            for (int i = imgheight - 1; i > deadline + 2; i--)  //可能可以改一下   不用加2
             {
 
 
@@ -931,7 +951,7 @@ namespace 上位机
             bool compare;
             leftdownY = 0;
             leftupY = 0;
-            if (boundary_left[imgheight - 2] == 0 )
+            if (boundary_left[imgheight - 2] == 0)
             {
                 yy = true;
                 compare = false;
@@ -968,7 +988,7 @@ namespace 上位机
 
                 }
             }
-            
+
 
         }
 
@@ -984,64 +1004,165 @@ namespace 上位机
     *思路：最小二乘法
     *********************************************************************************************************************/
         #region  回归直线
-        void regressionline(int yy, int direction, int times)
+        void regressionline(int yy, int direction, int updown, int times)
         {
             float averagex = 0;
             float averagey = 0;
             float b = 0;
             float upnumber = 0;
-            float downnumber=0;
-            if(direction == 1 &&   yy - times > 0)//左边
-            { 
-               for(int i = yy; i > yy - times; i--)
+            float downnumber = 0;
+            if (updown == updirection)
+            {
+                if (direction == 1 && yy - times > 0)//左边
                 {
-                    averagex += boundary_left[i];
-                    averagey += i;
-                }
-                averagex = averagex / 1.0f/times;
-                averagey = averagey / 1.0f/times;
-                for (int i = yy; i > yy - times; i--)
-                {
-                    upnumber += (boundary_left[i] - averagex) * (i - averagey);
-                    downnumber += (boundary_left[i] - averagex) * (boundary_left[i] - averagex);
-                }
-                b = upnumber / 1.0f/ downnumber;
-                if (b < 1000)
-                {
-                    for (int i = yy + 1; i <= imgheight - 1; i++)
+                    for (int i = yy; i > yy - times; i--)
+                    {
+                        averagex += boundary_left[i];
+                        averagey += i;
+                    }
+                    averagex = averagex / 1.0f / times;
+                    averagey = averagey / 1.0f / times;
+                    for (int i = yy; i > yy - times; i--)
+                    {
+                        upnumber += (boundary_left[i] - averagex) * (i - averagey);
+                        downnumber += (boundary_left[i] - averagex) * (boundary_left[i] - averagex);
+                    }
+                    b = upnumber / 1.0f / downnumber;
+
+                    if (b > 0)
+                    {
+                        if (b < 0.5f) b = 0.5f;
+                        if (b > 1000f) b = 1000f;
+                    }
+                    else
+                    {
+                        if (b > -0.5f) b = -0.5f;
+                        if (b < -1000f) b = -1000f;
+                    }
+                    for (int i = yy + 2; i < imgheight - 1; i++)
                     {
                         boundary_left[i] = (int)((i - yy) / (b) + boundary_left[yy]);
+
                         if (boundary_left[i] > imgwidth - 1) boundary_left[i] = imgwidth - 1;
                         if (boundary_left[i] < 0) boundary_left[i] = 0;
+                        if (abs(boundary_left[i] - boundary_left[i + 1]) < 3) break;
                     }
-                }
-            }
 
-            if (direction == 0 &&  yy - times > 0)//右边
-            {
-                for (int i = yy; i > yy - times; i--)
-                {
-                    averagex += boundary_right[i];
-                    averagey += i;
                 }
-                averagex = averagex /1.0f/ times;
-                averagey = averagey /1.0f/ times;
-                for (int i = yy; i > yy - times; i--)
+
+                if (direction == 0 && yy - times > 0)//右边
                 {
-                    upnumber += (boundary_right[i] - averagex) * (i - averagey);
-                    downnumber += (boundary_right[i] - averagex) * (boundary_right[i] - averagex);
-                }
-                b = upnumber / 1.0f/ downnumber;
-                if (b < 1000)
-                {
+                    for (int i = yy; i > yy - times; i--)
+                    {
+                        averagex += boundary_right[i];
+                        averagey += i;
+                    }
+                    averagex = averagex / 1.0f / times;
+                    averagey = averagey / 1.0f / times;
+                    for (int i = yy; i > yy - times; i--)
+                    {
+                        upnumber += (boundary_right[i] - averagex) * (i - averagey);
+                        downnumber += (boundary_right[i] - averagex) * (boundary_right[i] - averagex);
+                    }
+                    b = upnumber / 1.0f / downnumber;
+                    if (b > 0)
+                    {
+                        if (b < 0.5) b = 0.5f;
+                        if (b > 1000) b = 1000;
+                    }
+                    else
+                    {
+                        if (b > -0.5) b = -0.5f;
+                        if (b < -1000) b = -1000;
+                    }
+
                     for (int i = yy + 1; i <= imgheight - 1; i++)
                     {
                         boundary_right[i] = (int)((i - yy) / (b) + boundary_right[yy]);
                         if (boundary_right[i] > imgwidth - 1) boundary_right[i] = imgwidth - 1;
                         if (boundary_right[i] < 0) boundary_right[i] = 0;
                     }
+
                 }
             }
+            if(updown == downdirection) // 下面
+            {
+                if (direction == 1 && yy + times < imgheight - 1)//左边
+                {
+                    for (int i = yy; i < yy + times; i++)
+                    {
+                        averagex += boundary_left[i];
+                        averagey += i;
+                    }
+                    averagex = averagex / 1.0f / times;
+                    averagey = averagey / 1.0f / times;
+                    for (int i = yy; i < yy + times; i++)
+                    {
+                        upnumber += (boundary_left[i] - averagex) * (i - averagey);
+                        downnumber += (boundary_left[i] - averagex) * (boundary_left[i] - averagex);
+                    }
+                    b = upnumber / 1.0f / downnumber;
+
+                    if (b > 0)
+                    {
+                        if (b < 0.3f) b = 0.3f;
+                        if (b > 1000f) b = 1000f;
+                    }
+                    else
+                    {
+                        if (b > -0.3f) b = -0.3f;
+                        if (b < -1000f) b = -1000f;
+                    }
+          //          oo = b;
+                    for (int i = yy - 1; i > 0; i--)
+                    {
+                        boundary_left[i] = (int)((i - yy) / (b) + boundary_left[yy]);
+
+                        if (boundary_left[i] > imgwidth - 1) boundary_left[i] = imgwidth - 1;
+                        if (boundary_left[i] < 0) boundary_left[i] = 0;
+                        if (img[i][boundary_left[i]] == Black) break;
+                    }
+
+                }
+
+                if (direction == 0 && yy + times < imgheight - 1)//右边
+                {
+                    for (int i = yy; i < yy + times; i++)
+                    {
+                        averagex += boundary_right[i];
+                        averagey += i;
+                    }
+                    averagex = averagex / 1.0f / times;
+                    averagey = averagey / 1.0f / times;
+                    for (int i = yy; i < yy + times; i++)
+                    {
+                        upnumber += (boundary_right[i] - averagex) * (i - averagey);
+                        downnumber += (boundary_right[i] - averagex) * (boundary_right[i] - averagex);
+                    }
+                    b = upnumber / 1.0f / downnumber;
+                    if (b > 0)
+                    {
+                        if (b < 0.5) b = 0.5f;
+                        if (b > 1000) b = 1000;
+                    }
+                    else
+                    {
+                        if (b > -0.5) b = -0.5f;
+                        if (b < -1000) b = -1000;
+                    }
+
+                    for (int i = yy - 1; i > 0; i--)
+                    {
+                        boundary_right[i] = (int)((i - yy) / (b) + boundary_right[yy]);
+                        if (boundary_right[i] > imgwidth - 1) boundary_right[i] = imgwidth - 1;
+                        if (boundary_right[i] < 0) boundary_right[i] = 0;
+                        if (abs(boundary_left[i] - boundary_left[i - 1]) < 3) break;
+                    }
+
+                }
+            }
+
+
         }
 
 
@@ -1055,7 +1176,7 @@ namespace 上位机
     *返回；
     *思路：添加颜色
     *********************************************************************************************************************/
-       #region  出示点
+        #region  出示点
         void showpoint(byte colora, byte colorb)
         {
             img[leftupY][boundary_left[leftupY]] = colora;
@@ -1095,20 +1216,50 @@ namespace 上位机
             System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
             watch.Start();  //开始监视代码运行时间
                             //需要测试的代码
-         
+            bool ppo;
             fuck = "Null";
+
             myfindline(0, 49, boundary_left, boundary_right, imgheight, imgheight, 60);
-            turning(trustline);
-            crossroad();
-
-
-            for (int i = 49; i >= trustline + 1; i--)
+            if (circle == false)
             {
-                middle_line[i] = (boundary_left[i] + boundary_right[i]) / 2;
+                entercircle(trustline);//定义了左边圆还是右边圆，传递circle 设置roundstate = 1
+                if (circle == false)
+                {
+                    if (turning(trustline) == true) { }
+                    else if (crossroad() == true) { }
+                }
+            }
+            if (circle == true)
+            {
+                if (roundstate == 1)
+                {
+                    deal_entercircle();
+                    cmp_enterturning();
+                    if (oneoff == true) deal_enterturning();
+                }
+                if(roundstate == 2)
+                {
+                    cmp_outturning();
+                    if (twooff == true) deal_outturning();
+                }
+                if(roundstate ==3)
+                {
+                    deal_outcircle();
+                }
+            }
+
+            if (fuck == "大左转") { turning_middleline(leftdirection, 3); }
+            else if (fuck == "大右转") { turning_middleline(rightdirection, 3); }
+            else
+            {
+                for (int i = 49; i >= trustline + 1; i--)
+                {
+                    middle_line[i] = (boundary_left[i] + boundary_right[i]) / 2;
+                }
             }
             watch.Stop();  //停止监视
             TimeSpan timespan = watch.Elapsed;
-            oo = timespan.TotalMilliseconds;
+          //  oo = timespan.TotalMilliseconds;
         }
 
         #endregion
@@ -1121,7 +1272,7 @@ namespace 上位机
 *********************************************************************************************************************/
         #region
         bool crossroad()
-        { 
+        {
             if (leftcompare == 1 && rightcompare == 1)
             {
                 leftdealboundary(3, trustline);
@@ -1137,8 +1288,8 @@ namespace 上位机
                     }
                     else if (leftdownY == 0 && rightdownY == 0)
                     {
-                        regressionline(rightupY, 0, 3);
-                        regressionline(leftupY, 1, 3);
+                        regressionline(rightupY, 0, 1,3);
+                        regressionline(leftupY, 1, 1,3);
                         fuck = "上半十字";
                         return true;
                     }
@@ -1160,34 +1311,34 @@ namespace 上位机
      *        
      *********************************************************************************************************************/
         #region
-            bool turning(int downY)
+        bool turning(int downY)
         {
             int compare = 0;
             int jj = 0;
             int qq = 0;
-            for(int i = imgheight - 1; i > (downY + 3); i= i - 4 )
+            for (int i = imgheight - 1; i > (downY + 3); i = i - 4)
             {
-                if (boundary_left[ i] < boundary_left[ i - 3] && boundary_right[ i] == imgwidth - 1) jj++;
+                if (boundary_left[i] < boundary_left[i - 3] && boundary_right[i] == imgwidth - 1) jj++;
                 if (jj == 5)
                 {
                     compare = 1;// 右转
                     break;
                 }
-                if (boundary_right[ i] > boundary_right[ i - 3] && boundary_left[ i] == 0) qq++;
+                if (boundary_right[i] > boundary_right[i - 3] && boundary_left[i] == 0) qq++;
                 if (qq == 5)
                 {
                     compare = 2; // 左转
                     break;
                 }
             }
-            if(compare ==1)
+            if (compare == 1)
             {
-                for (int i = imgheight - 10; i > downY; i --)
+                for (int i = imgheight - 10; i > downY; i--)
                 {
                     if (img[i - 1][boundary_right[i]] == Black) trustline = i;
                 }
-                    fuck = "大右转";
-                
+                fuck = "大右转";
+
                 return true;
             }
             if (compare == 2)
@@ -1195,7 +1346,7 @@ namespace 上位机
                 fuck = "大左转";
                 for (int i = imgheight - 10; i > downY; i--)//减10 是为了防止特殊情况  这是更新trustline
                 {
-                    if (img[i -1][boundary_left[i]] == Black) trustline = i;
+                    if (img[i - 1][boundary_left[i]] == Black) trustline = i;
                 }
                 return true;
             }
@@ -1203,34 +1354,536 @@ namespace 上位机
         }
         #endregion
 
-
-
-        void ImgProc(byte[][] image)//图像处理函数
+        /*********************************************************************************************************************
+                                                                入圆判断函数！！
+*输入： 
+*返回；circle是否入圆 rounddir入圆状况为1
+*思路：利用一边不发生跳变，另一边发生跳变来判断
+*********************************************************************************************************************/
+        #region
+   
+        void entercircle(int downY)
         {
-            try
+            oneoff = false;
+            twooff = false;
+            threeoff = false;
+            kkoff = false;
+            bool jj = true;
+            for (int i = imgheight - 1; i > downY; i--)
             {
-                //图像处理的函数在这里写
-                //  findboundary(60, 49, 0, true, true, boundary_left, boundary_right, imgheight, imgheight);
-                //findloseline(30, 4, 4);
-                //showcolarray(49, 0, boundary_left, 2);
-                //showcolarray(49, 0, boundary_right, 3);
-                //showrow(0, 119, finalloseline , 5);
-                //showrow(99, 119, finalloseline_right, 4);
-                //showrow(0, 20, finalloseline_left, 4);
-
-                oneforall();
-                showcolarray(48, 0, boundary_left, 2);
-                showcolarray(48, 0, boundary_right, 3);
-                showcolarray(48, 0, middle_line, 4);
-                showrow(0, imgwidth - 1, trustline, 5);
-              //  showpoint(4, 5);
-    
+                if (abs(boundary_left[i] - boundary_left[i - 1]) > 7) jj = false;
             }
-            catch (Exception ee)
+            if (jj == true)
             {
-                MessageBox.Show(ee.Message + " " + ee.StackTrace);
+                rightdealboundary(3, trustline);
+                if (rightupY != 0 && rightdownY != 0)
+                {
+                    circle = true;
+                        roundstate = 1;
+                    rounddir = rightdirection;
+                    fuck = "右边圆";
+                }
+            }
+            else
+            {
+                jj = true;
+                for (int i = imgheight - 1; i > downY; i--)
+                {
+                    if (abs(boundary_right[i] - boundary_right[i - 1]) > 7) jj = false;
+                }
+                if (jj == true)
+                {
+                    leftdealboundary(3, trustline);
+                    if (leftupY != 0 && leftdownY != 0)
+                    {
+                        circle = true;
+                        roundstate = 1;
+                        rounddir = leftdirection;
+                        fuck = "左边圆";
+                    }
+                }
+
             }
         }
+        #endregion
 
+        /*********************************************************************************************************************
+                                                            入圆-直走处理函数！！
+*输入：
+*返回；kkoff 如果kkoff为true，说明已经走到差不多入圆转弯的位置
+*思路：在入圆后，并且没有入弯的时候，进行一侧的补线
+*********************************************************************************************************************/
+        #region
+        void deal_entercircle()
+        {
+            int updown = 0;
+            int less;
+
+            if (rounddir == rightdirection)
+            {
+                rightdownY = 0;
+                rightupY = 0;
+                for (int i = imgheight - 1; i > trustline; i--)
+                {
+                    if (boundary_right[i] < boundary_right[i - 1] && boundary_right[i - 1] == imgwidth - 1)
+                    {
+                        rightdownY = i + 4;
+                        updown = 1;
+                        break;
+                    }
+                }
+
+                if (updown == 1 && rightdownY > trustline + 3)
+                {
+                    less = imgwidth - 1;
+                    for (int i = rightdownY - 2; i > trustline; i--)
+                    {
+                        if (boundary_right[i] < less)
+                        {
+                            rightupY = i;
+                            less = boundary_right[i];
+                        }
+                    }
+                }
+                else if (boundary_right[imgheight - 1] == imgwidth - 1)
+                {
+                    less = imgwidth - 1;
+                    for (int i = imgheight - 1; i > trustline + 10; i--)
+                    {
+                        if (boundary_right[i] < less)
+                        {
+                            rightupY = i;
+                            less = boundary_right[i];
+                        }
+                    }
+                }
+                if (rightdownY != 0 && rightupY != 0) rightcalculate(rightdownY, rightupY);
+                else if (rightdownY == 0 && rightupY != 0)
+                {
+                    kkoff = true;
+                    for (int i = imgheight - 1; i > rightupY; i--) boundary_right[i] = boundary_right[rightupY];
+                }
+   
+            }
+            if(rounddir == leftdirection)
+            {
+                leftdownY = 0;
+                leftupY = 0;
+                for (int i = imgheight - 1; i > trustline; i--)
+                {
+                    if (boundary_left[i] > boundary_left[i - 1] && boundary_left[i - 1] == 0)
+                    {
+                        leftdownY = i + 4;
+                        updown = 1;
+                        break;
+                    }
+                }
+
+                if (updown == 1 && leftdownY > trustline + 3)
+                {
+                    less = 0;
+                    for (int i = leftdownY - 2; i > trustline; i--)
+                    {
+                        if (boundary_left[i] > less)
+                        {
+                            leftupY = i;
+                            less = boundary_left[i];
+                        }
+                    }
+                }
+                else if (boundary_left[imgheight - 1] == 0)
+                {
+                    less = 0;
+                    for (int i = imgheight - 1; i > trustline + 10; i--)
+                    {
+                        if (boundary_left[i] > less)
+                        {
+                            leftupY = i;
+                            less = boundary_left[i];
+                        }
+                    }
+                }
+                if (leftdownY != 0 && leftupY != 0) leftcalculate(leftdownY, leftupY);
+                else if (leftdownY == 0 && leftupY != 0)
+                {
+                    kkoff = true;
+                    for (int i = imgheight - 1; i > leftupY; i--) boundary_left[i] = boundary_left[leftupY];
+                }
+
+            }
+        }
+        #endregion
+
+        /*********************************************************************************************************************
+                                                        入圆-入弯判断函数！！
+*输入：  a 整形变量
+*返回；整形绝对值常量
+*思路：三目运算符
+*********************************************************************************************************************/
+        #region
+        void cmp_enterturning()
+        {
+            int middle = imgwidth / 2;
+            if (rounddir == rightdirection)
+            {
+                for (int i = imgheight - 1; i > trustline + 1; i--)
+                {
+
+                    if (boundary_left[i - 1] > boundary_left[i] + 5)
+                    {
+                        oneoff = true;
+                        break;
+                    }
+                    if (i == trustline + 2 && oneoff == true) //假如检测不到
+                    {
+                        oneoff = false;
+                        roundstate = 2;
+                    }
+                }
+            }
+            if (rounddir == leftdirection)
+            {
+                for (int i = imgheight - 1; i > trustline + 1; i--)
+                {
+
+                    if (boundary_right[i - 1] < boundary_right[i] - 5)
+                    {
+                        oneoff = true;
+                        break;
+                    }
+                    if (i == trustline + 2 && oneoff == true) //假如检测不到
+                    {
+                        oneoff = false;
+                        roundstate = 2;
+                    }
+                }
+            }
+
+        }
+        #endregion
+
+
+        /*********************************************************************************************************************
+                                                            入圆-入弯处理函数！！
+*输入：  a 整形变量
+*返回；整形绝对值常量
+*思路：三目运算符
+*********************************************************************************************************************/
+        #region
+        void deal_enterturning()
+        {
+            int middle = imgwidth / 2; 
+            if (rounddir == rightdirection)
+            {
+                leftupY = 0;
+                for (int i = imgheight - 1; i > trustline; i--)
+                {
+                   if(boundary_left[i] + 5<boundary_left[i - 1])
+                    {
+                        leftupY = i - 1;
+                        break;
+                    }
+                }
+                if (leftupY != 0) regressionline(leftupY, 1, 1, 3);
+            }
+            if (rounddir == leftdirection)
+            {
+                rightupY = 0;
+                for (int i = imgheight - 1; i > trustline; i--)
+                {
+                    if (boundary_right[i] - 5 > boundary_left[i - 1])
+                    {
+                        rightupY = i - 1;
+                        break;
+                    }
+                }
+                if (rightupY != 0) regressionline(rightupY, 0, 1, 3);
+            }
+        }
+        #endregion
+        /*********************************************************************************************************************
+                                                                出湾判断函数！！
+*输入：  a 整形变量
+*返回；整形绝对值常量
+*思路：三目运算符
+*********************************************************************************************************************/
+        #region
+        void cmp_outturning()
+        {
+            int middle = imgwidth / 2;
+            if (rounddir == rightdirection)
+            {
+                for (int i = imgheight - 1; i > trustline + 1; i--)
+                {
+
+                    if (boundary_left[i - 1] < boundary_left[i] - 5)
+                    {
+                        twooff = true;
+                        break;
+                    }
+                    if (i == trustline + 2 && twooff == true) //假如检测不到
+                    {
+                        twooff = false;
+                        roundstate = 3;
+                    }
+                }
+            }
+            if (rounddir == leftdirection)
+            {
+                for (int i = imgheight - 1; i > trustline + 1; i--)
+                {
+
+                    if (boundary_right[i - 1] > boundary_right[i] + 5)
+                    {
+                        twooff = true;
+                        break;
+                    }
+                    if (i == trustline + 2 && oneoff == true) //假如检测不到
+                    {
+                        twooff = false;
+                        roundstate =3;
+                    }
+                }
+            }
+        }
+        #endregion
+        /*********************************************************************************************************************
+                                                        出湾处理函数！！
+*输入：  a 整形变量
+*返回；整形绝对值常量
+*思路：三目运算符
+*********************************************************************************************************************/
+        #region
+        void deal_outturning()
+        {
+            int middle = imgwidth / 2; ;
+            int left = 0;
+            int right = 0;
+            int qq = 0;
+            if (rounddir == rightdirection)
+            {
+                leftdownY = 0;
+                for (int i = imgheight - 1; i > trustline; i--)
+                {
+                    if (boundary_left[i] - 5 > boundary_left[i - 1])
+                    {
+                        leftdownY = i+2 ;
+                        break;
+                    }
+                }
+                if (leftdownY != 0) regressionline(leftdownY, 1,0, 6);
+            }
+            if (rounddir == leftdirection)
+            {
+                rightupY = 0;
+                for (int i = imgheight - 1; i > trustline; i--)
+                {
+                    left = findchange(middle, leftdirection, i, Black, 0, 2, 2);
+                    right = findchange(left + 4, rightdirection, i, Black, imgwidth - 1, 2, 2);
+                    middle = (right + left) / 2;
+                    if (i != imgheight - 1 && qq - right > 5)
+                    {
+                        rightupY = i;
+                        break;
+                    }
+                    qq = right;
+                }
+                if (rightupY != 0) regressionline(rightupY, 0,0, 3);
+            }
+        }
+        #endregion
+
+        /*********************************************************************************************************************
+                                                出圆处理函数！！
+*输入：  a 整形变量
+*返回；整形绝对值常量
+*思路：三目运算符
+*********************************************************************************************************************/
+        #region
+            void deal_outcircle()
+        {
+            int less;
+            kkoff = false;
+            if(rounddir == rightdirection)
+            {
+                rightupY = 0;
+                rightdownY = 0;
+               
+                for (int i = imgheight - 1; i > trustline; i--)
+                {
+                    if (boundary_right[i] - 3 > boundary_right[i - 1])
+                    {
+                        rightupY = i - 2;
+                        threeoff = true;
+                        break;
+                    }
+
+                }
+                if (rightupY != 0)
+                {
+                    less = imgwidth - 1;
+                    for (int i = imgheight - 1; i > rightupY + 3; i--)
+                    {
+                        if (boundary_right[i] < less)
+                        {
+                            rightdownY = i;
+                            less = boundary_right[i];
+                        }
+                    }
+                }
+                if (rightupY != 0 && rightdownY != 0)
+                {
+                    rightcalculate(rightdownY, rightupY);
+                }
+                if (rightupY != 0 && rightdownY == 0)
+                {
+                    regressionline(rightupY, rightdirection, updirection, 3);
+                }
+                if(threeoff == true && rightupY == 0)
+                {
+                    circle = false;
+                    threeoff = false;
+                }
+            }
+            if (rounddir == leftdirection)
+            {
+                for (int i = imgheight - 1; i > trustline; i--)
+                {
+                    if (boundary_left[i] - 7 > boundary_left[i - 1])
+                    {
+                        rightupY = i - 2;
+                        threeoff = true;
+                        break;
+                    }
+                    if (i == trustline + 1 && threeoff == true)
+                    {
+                        circle = false;
+                        threeoff = false;
+                    }
+                }
+                regressionline(rightupY, 0, updirection, 3);
+            }
+        }
+        #endregion
+        /*********************************************************************************************************************
+                                            中线处理函数！！
+*输入：  a 整形变量
+*返回；整形绝对值常量
+*思路：三目运算符
+*********************************************************************************************************************/
+        #region
+        void turning_middleline(int direction, int times)
+        {
+            int down = 0;
+            int up =0;
+            bool Is_zero = false;
+            int Is_oo = 0;
+            for (int i = 49; i >= trustline + 1; i--)
+            {
+                middle_line[i] = (boundary_left[i] + boundary_right[i]) / 2;
+            }
+            if (direction == leftdirection)
+            {
+                for (int i = imgheight - 1; i > trustline + times; i--)
+                {
+                    for (int j = 0; j < times; j++)
+                    {
+                        Is_oo += boundary_left[i - j];
+                    }
+                    if (Is_oo == 0)
+                    {
+                        down = i;
+                        break;
+                    }
+                }
+                if (down != 0)
+                {
+                    for (int i = down; i > trustline; i--)
+                    {
+                        if (boundary_left[i - 1] != 0)
+                        {
+                            up = i;
+                            break;
+                        }
+                        if (i == trustline + 1) up = trustline + 1;
+                    }
+                }
+                if (down != 0 && up != 0)
+                {
+                    for (int i = down - 1; i > up; i--)
+                    {
+                        middle_line[i] =(int) (middle_line[i + 1] + (boundary_right[i] - boundary_right[i + 1]));
+                    }
+                }
+            }
+            if(direction == rightdirection)
+            {
+                for (int i = imgheight - 1; i > trustline + times; i--)
+                {
+                    for (int j = 0; j < times; j++)
+                    {
+                        Is_oo += boundary_right[i - j];
+                    }
+                    if (Is_oo == (imgwidth - 1) * times)
+                    {
+                        down = i;
+                        break;
+                    }
+                }
+                if (down != 0)
+                {
+                    for (int i = down; i > trustline; i--)
+                    {
+                        if (boundary_right[i - 1] != 0)
+                        {
+                            up = i;
+                            break;
+                        }
+                        if (i == trustline + 1) up = trustline + 1;
+                    }
+                }
+                if (down != 0 && up != 0)
+                {
+                    for (int i = down - 1; i > up; i--)
+                    {
+                        middle_line[i] = (int)(middle_line[i + 1] + (boundary_left[i] - boundary_left[i + 1]));
+                    }
+                }
+            }
+            for (int i = imgheight - 1; i> trustline; i--)
+            {
+                if (middle_line[i] < 0) middle_line[i] = 0;
+                if (middle_line[i] > imgwidth - 1) middle_line[i] = imgwidth - 1;
+            }
+        }
+        #endregion
+
+        void ImgProc(byte[][] image)//图像处理函数
+            {
+                try
+                {
+                    //图像处理的函数在这里写
+                    //  findboundary(60, 49, 0, true, true, boundary_left, boundary_right, imgheight, imgheight);
+                    //findloseline(30, 4, 4);
+                    //showcolarray(49, 0, boundary_left, 2);
+                    //showcolarray(49, 0, boundary_right, 3);
+                    //showrow(0, 119, finalloseline , 5);
+                    //showrow(99, 119, finalloseline_right, 4);
+                    //showrow(0, 20, finalloseline_left, 4);
+
+                    oneforall();
+                    showcolarray(48, 0, boundary_left, 2);
+                    showcolarray(48, 0, boundary_right, 3);
+                    showcolarray(48, 0, middle_line, 4);
+                    showrow(0, imgwidth - 1, trustline, 5);
+                    //  showpoint(4, 5);
+
+                }
+                catch (Exception ee)
+                {
+                    MessageBox.Show(ee.Message + " " + ee.StackTrace);
+                }
+            }
+
+        }
     }
-}
